@@ -5,21 +5,15 @@ import BottomRow from "./BottomRow";
 
 function App() {
   //TODO: STEP 2 - Establish your applictaion's state with some useState hooks.  You'll need one for the home score and another for the away score.
-  const [homeScore, setHomeScore] = useState(0);
-  const [awayScore, setAwayScore] = useState(0);
-  const handlers = {
-    updateHomeTouch: e => {
-      setHomeScore(homeScore + 7);
-    },
-    updateHomeField: e => {
-      setHomeScore(homeScore + 3);
-    },
-    updateAwayTouch: e => {
-      setAwayScore(awayScore + 7);
-    },
-    updateAwayField: e => {
-      setAwayScore(awayScore + 3);
-    },
+  const [home, setHomeScore] = useState(0);
+  const [away, setAwayScore] = useState(0);
+
+  const updateTouchField = (side, score) => {
+    if (side === 'home') {
+      setHomeScore(home + score);
+    } else if (side === 'away') {
+      setAwayScore(away + score);
+    }
   }
 
   return (
@@ -31,12 +25,12 @@ function App() {
 
             {/* TODO STEP 3 - We need to change the hardcoded values in these divs to accept dynamic values from our state. */}
 
-            <div className="home__score">{homeScore}</div>
+            <div className="home__score">{home}</div>
           </div>
           <div className="timer">00:03</div>
           <div className="away">
             <h2 className="away__name">Tigers</h2>
-            <div className="away__score">{awayScore}</div>
+            <div className="away__score">{away}</div>
           </div>
         </div>
         <BottomRow />
@@ -44,12 +38,12 @@ function App() {
       <section className="buttons">
         <div className="homeButtons">
           {/* TODO STEP 4 - Now we need to attach our state setter functions to click listeners. */}
-          <button className="homeButtons__touchdown" onClick={handlers.updateHomeTouch}>Home Touchdown</button>
-          <button className="homeButtons__fieldGoal" onClick={handlers.updateHomeField}>Home Field Goal</button>
+          <button className="homeButtons__touchdown" onClick={() => updateTouchField('home', 7)}>Home Touchdown</button>
+          <button className="homeButtons__fieldGoal" onClick={() => updateTouchField('home', 3)}>Home Field Goal</button>
         </div>
         <div className="awayButtons">
-          <button className="awayButtons__touchdown" onClick={handlers.updateAwayTouch}>Away Touchdown</button>
-          <button className="awayButtons__fieldGoal" onClick={handlers.updateAwayField}>Away Field Goal</button>
+          <button className="awayButtons__touchdown" onClick={() => updateTouchField('away', 7)}>Away Touchdown</button>
+          <button className="awayButtons__fieldGoal" onClick={() => updateTouchField('away', 3)}>Away Field Goal</button>
         </div>
       </section>
     </div>
